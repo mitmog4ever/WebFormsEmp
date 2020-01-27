@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CompanyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="id_cat" />
+          </Key>
+          <Property Name="id_cat" Type="int" Nullable="false" />
+          <Property Name="description_cat" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Departements">
+          <Key>
+            <PropertyRef Name="id_dep" />
+          </Key>
+          <Property Name="id_dep" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom_dep" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description_dep" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Date_creat" Type="date" Nullable="false" />
+          <Property Name="id_cat" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="id_emp" />
+          </Key>
+          <Property Name="id_emp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom_emp" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="prenom_emp" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salaire_emp" Type="float" Nullable="false" />
+          <Property Name="date_recrute_emp" Type="date" Nullable="false" />
+          <Property Name="tele_emp" Type="float" Nullable="false" />
+          <Property Name="id_dep" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Departements_Categorie">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+          <End Role="Departements" Type="Self.Departements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="id_cat" />
+            </Principal>
+            <Dependent Role="Departements">
+              <PropertyRef Name="id_cat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Departements">
+          <End Role="Departements" Type="Self.Departements" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departements">
+              <PropertyRef Name="id_dep" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="id_dep" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CompanyDBModelStoreContainer">
+          <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departements" EntityType="Self.Departements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Departements_Categorie" Association="Self.FK_Departements_Categorie">
+            <End Role="Categorie" EntitySet="Categorie" />
+            <End Role="Departements" EntitySet="Departements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Departements" Association="Self.FK_Employees_Departements">
+            <End Role="Departements" EntitySet="Departements" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CompanyDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="id_cat" />
+          </Key>
+          <Property Name="id_cat" Type="Int32" Nullable="false" />
+          <Property Name="description_cat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Departements" Relationship="Self.FK_Departements_Categorie" FromRole="Categorie" ToRole="Departements" />
+        </EntityType>
+        <EntityType Name="Departement">
+          <Key>
+            <PropertyRef Name="id_dep" />
+          </Key>
+          <Property Name="id_dep" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom_dep" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description_dep" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date_creat" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_cat" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Categorie" Relationship="Self.FK_Departements_Categorie" FromRole="Departements" ToRole="Categorie" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employees_Departements" FromRole="Departements" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id_emp" />
+          </Key>
+          <Property Name="id_emp" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom_emp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="prenom_emp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Salaire_emp" Type="Double" Nullable="false" />
+          <Property Name="date_recrute_emp" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="tele_emp" Type="Double" Nullable="false" />
+          <Property Name="id_dep" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Departement" Relationship="Self.FK_Employees_Departements" FromRole="Employees" ToRole="Departements" />
+        </EntityType>
+        <Association Name="FK_Departements_Categorie">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+          <End Role="Departements" Type="Self.Departement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="id_cat" />
+            </Principal>
+            <Dependent Role="Departements">
+              <PropertyRef Name="id_cat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Departements">
+          <End Role="Departements" Type="Self.Departement" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departements">
+              <PropertyRef Name="id_dep" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="id_dep" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CompanyDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Categorie" />
+          <EntitySet Name="Departements" EntityType="Self.Departement" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <AssociationSet Name="FK_Departements_Categorie" Association="Self.FK_Departements_Categorie">
+            <End Role="Categorie" EntitySet="Categories" />
+            <End Role="Departements" EntitySet="Departements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Departements" Association="Self.FK_Employees_Departements">
+            <End Role="Departements" EntitySet="Departements" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CompanyDBModelStoreContainer" CdmEntityContainer="CompanyDBEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="CompanyDBModel.Categorie">
+              <MappingFragment StoreEntitySet="Categorie">
+                <ScalarProperty Name="id_cat" ColumnName="id_cat" />
+                <ScalarProperty Name="description_cat" ColumnName="description_cat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departements">
+            <EntityTypeMapping TypeName="CompanyDBModel.Departement">
+              <MappingFragment StoreEntitySet="Departements">
+                <ScalarProperty Name="id_dep" ColumnName="id_dep" />
+                <ScalarProperty Name="nom_dep" ColumnName="nom_dep" />
+                <ScalarProperty Name="description_dep" ColumnName="description_dep" />
+                <ScalarProperty Name="Date_creat" ColumnName="Date_creat" />
+                <ScalarProperty Name="id_cat" ColumnName="id_cat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="CompanyDBModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="id_emp" ColumnName="id_emp" />
+                <ScalarProperty Name="nom_emp" ColumnName="nom_emp" />
+                <ScalarProperty Name="prenom_emp" ColumnName="prenom_emp" />
+                <ScalarProperty Name="Salaire_emp" ColumnName="Salaire_emp" />
+                <ScalarProperty Name="date_recrute_emp" ColumnName="date_recrute_emp" />
+                <ScalarProperty Name="tele_emp" ColumnName="tele_emp" />
+                <ScalarProperty Name="id_dep" ColumnName="id_dep" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CompanyDBModelStoreContainer" CdmEntityContainer="CompanyDBEntities">
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="CompanyDBModel.Categorie">
+        <MappingFragment StoreEntitySet="Categorie">
+          <ScalarProperty Name="id_cat" ColumnName="id_cat" />
+          <ScalarProperty Name="description_cat" ColumnName="description_cat" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Departements">
+      <EntityTypeMapping TypeName="CompanyDBModel.Departement">
+        <MappingFragment StoreEntitySet="Departements">
+          <ScalarProperty Name="id_dep" ColumnName="id_dep" />
+          <ScalarProperty Name="nom_dep" ColumnName="nom_dep" />
+          <ScalarProperty Name="description_dep" ColumnName="description_dep" />
+          <ScalarProperty Name="Date_creat" ColumnName="Date_creat" />
+          <ScalarProperty Name="id_cat" ColumnName="id_cat" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="CompanyDBModel.Employee">
+        <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="id_emp" ColumnName="id_emp" />
+          <ScalarProperty Name="nom_emp" ColumnName="nom_emp" />
+          <ScalarProperty Name="prenom_emp" ColumnName="prenom_emp" />
+          <ScalarProperty Name="Salaire_emp" ColumnName="Salaire_emp" />
+          <ScalarProperty Name="date_recrute_emp" ColumnName="date_recrute_emp" />
+          <ScalarProperty Name="tele_emp" ColumnName="tele_emp" />
+          <ScalarProperty Name="id_dep" ColumnName="id_dep" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

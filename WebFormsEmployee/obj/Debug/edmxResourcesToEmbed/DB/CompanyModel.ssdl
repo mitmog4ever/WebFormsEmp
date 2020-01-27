@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CompanyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Categorie">
+    <Key>
+      <PropertyRef Name="id_cat" />
+    </Key>
+    <Property Name="id_cat" Type="int" Nullable="false" />
+    <Property Name="description_cat" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Departements">
+    <Key>
+      <PropertyRef Name="id_dep" />
+    </Key>
+    <Property Name="id_dep" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nom_dep" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="description_dep" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Date_creat" Type="date" Nullable="false" />
+    <Property Name="id_cat" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="id_emp" />
+    </Key>
+    <Property Name="id_emp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nom_emp" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="prenom_emp" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Salaire_emp" Type="float" Nullable="false" />
+    <Property Name="date_recrute_emp" Type="date" Nullable="false" />
+    <Property Name="tele_emp" Type="float" Nullable="false" />
+    <Property Name="id_dep" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Departements_Categorie">
+    <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+    <End Role="Departements" Type="Self.Departements" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorie">
+        <PropertyRef Name="id_cat" />
+      </Principal>
+      <Dependent Role="Departements">
+        <PropertyRef Name="id_cat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employees_Departements">
+    <End Role="Departements" Type="Self.Departements" Multiplicity="1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departements">
+        <PropertyRef Name="id_dep" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="id_dep" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CompanyDBModelStoreContainer">
+    <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Departements" EntityType="Self.Departements" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Departements_Categorie" Association="Self.FK_Departements_Categorie">
+      <End Role="Categorie" EntitySet="Categorie" />
+      <End Role="Departements" EntitySet="Departements" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employees_Departements" Association="Self.FK_Employees_Departements">
+      <End Role="Departements" EntitySet="Departements" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
